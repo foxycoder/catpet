@@ -1,6 +1,39 @@
-<h1>CatPet</h1>
-<p>Welcome to CatPet!</p>
-<p><small>Coming Soon!</small></p>
-<p>
-  <%= image_tag "cat.jpg", class: "landing-cat" %>
-</p>
+<div class="row landing-header">
+  <div class="landing-form">
+    <h1>CatPet =^.^=</h1>
+    <p>Welcome to CatPet!</p>
+
+    <%= form_for(@listing) do |f| %>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :price %><br>
+        <div class="input-group">
+          <span class="input-group-addon">€</span>
+          <%= f.text_field :price, class: 'form-control' %>
+          <span class="input-group-addon">.00</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :petability, "Cuddliness" %><br>
+        <div class="btn-group" data-toggle="buttons">
+          <% Listing.pet_levels.each do |pet_level| %>
+            <label class="btn btn-<%= pet_level %> <%= @listing.petability == pet_level ? "active" : "" %>">
+              <%= f.radio_button :petability, pet_level, autocomplete: :off %>
+              <%= pet_level %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit "Enlist your Cat", class: 'btn btn-lg btn-success' %>
+        <%= link_to "Just browse Cats", listings_path %>
+      </div>
+    <% end %>
+  </div>
+</div>
